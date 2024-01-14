@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { database } from "../FIrebase";
-import {  ref, set } from "firebase/database";
+import { ref, set } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
-
 
 const input = () => {
   const [todo, setTodo] = useState("");
@@ -10,8 +9,11 @@ const input = () => {
     if (!todo) {
       alert("Empty");
     } else {
-      set(ref(database, "todos/" + uuidv4()), {
+      let uniqueID = uuidv4();
+      set(ref(database, "todos/" + uniqueID), {
+        ID: uniqueID,
         todo: todo,
+        complete: false,
       });
 
       setTodo("");
@@ -20,8 +22,8 @@ const input = () => {
 
   return (
     <div>
-      <h1 className="font-ubuntu font-normal text-[40px] text-textPrimary text-center mb-[10px]">
-        To DO App
+      <h1 className="font-ubuntu font-semibold text-[40px] text-textPrimary text-center mb-[10px]">
+        ToDo App
       </h1>
       <div className=" relative flex items-center justify-center w-[250px] mx-auto">
         <input
